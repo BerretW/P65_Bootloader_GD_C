@@ -15,11 +15,12 @@ ca65 --cpu 65c02 pckybd.asm -o ..\output\pckybd.o
 ca65 --cpu 65c02 utils.asm -o ..\output\utils.o
 ca65 --cpu 65c02 sn76489.asm -o ..\output\sn76489.o
 ca65 --cpu 65c02 zeropage.asm -o ..\output\zeropage.o
+ca65 --cpu 65c02 ewoz.asm -o ..\output\ewoz.o
 
 move *.s ..\output
 
 cd ..\output
 
-ld65 -C APP_RAM_DISK.cfg -m ram.map main.o spi.o acia.o gameduino.o gd.o interrupts.o vectors.o jumptable.o pckybd.o utils.o sn76489.o zeropage.o ..\library\p65.lib -o ..\output\RAM.bin
+ld65 -C APP_RAM_DISK.cfg -m ram.map main.o spi.o acia.o gameduino.o gd.o interrupts.o vectors.o jumptable.o pckybd.o utils.o sn76489.o zeropage.o ewoz.o ..\library\p65.lib -o ..\output\RAM.bin
 
-ld65 -C ..\config\appartus.cfg -m rom.map main.o spi.o acia.o gameduino.o gd.o interrupts.o vectors.o jumptable.o pckybd.o utils.o sn76489.o zeropage.o ..\library\p65.lib -o ..\output\ROM.bin
+ld65 -C ..\config\appartus.cfg -m rom.map main.o spi.o acia.o gameduino.o gd.o interrupts.o vectors.o jumptable.o pckybd.o utils.o sn76489.o zeropage.o ewoz.o ..\library\p65.lib -o ..\output\ROM.bin

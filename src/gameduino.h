@@ -8,12 +8,25 @@ extern void _wstart(unsigned addr);
 extern void _end(void);
 extern char GD_rd(unsigned addr);
 extern void GD_wr(unsigned addr, char v);
+
+extern void GD_res_cur();
+extern void GD_set_cur(char x, char y);
+extern void GD_Print(const char *s);
+extern void GD_Print_char(char c);
+extern void GD_Printnl(const char *s);
+extern void GD_NewLine();
+extern void GD_cursor_LEFT();
+extern void GD_cursor_RIGHT();
+extern void GD_cursor_UP();
+extern void GD_cursor_DOWN();
+
 extern void GD_fill(unsigned addr, char v, unsigned count);
 extern void GD_wr16(unsigned addr, unsigned v);
 extern unsigned char GD_rd16(unsigned addr);
 extern void GD_sprite(char spr, int x, int y, char image, char palette, char rot, char jk);
 extern void GD_setpal(char pal, unsigned rgb);
 extern void GD_ascii();
+
 extern void GD_copy(unsigned addr, char *src, int count);
 
 #define RGB(r,g,b) ((((r) >> 3) << 10) | (((g) >> 3) << 5) | ((b) >> 3))

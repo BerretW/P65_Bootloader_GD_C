@@ -33,17 +33,23 @@ _delay_hi:				.res 1
 
 .segment "CODE"
 
-__output:           JSR _GD_print_nl
+__output:           PHA
+                    PHX
+                    JSR _GD_Printnl
+                    PLX
+                    PLA
                     JMP _acia_print_nl
 
-__print:            JSR _GD_puts
+__print:            JSR _GD_Print
                     JMP _acia_puts
 
 
-__newline:          JSR _GD_newLine
+__newline:          JSR _GD_NewLine
                     JMP _acia_put_newline
 
-__chrout:           JSR _GD_print
+__chrout:           PHA
+                    JSR _GD_Print_char
+                    PLA
                     JMP _acia_putc
 
 
@@ -71,7 +77,8 @@ _echo_test:         JSR _GD_res_cur
 @lll:               JSR _KBINPUT
                     STA _in_char
                     JSR _CHROUT
-                    JMP _echo_test
+                    JSR _GD_cursor_LEFT
+                    JMP @lll
 
 
 

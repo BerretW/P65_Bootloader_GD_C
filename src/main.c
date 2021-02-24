@@ -7,9 +7,8 @@
 #include "gameduino.h"
 #include "spi.h"
 #include "jumptable.h"
-#include "gd.h"
 #include "pckybd.h"
-
+#include "ewoz.h"
 
 
 void setup(){
@@ -22,9 +21,10 @@ void setup(){
 void main(void) {
   setup();
 
-  PRNTLN("Vita Vas Projekt65");
-  PRNTLN("Produkt skupiny APPARTUS lůhlh jklh  jklůghjklůh jklh jklů jklhkjhg nmnm,b nm,bnm,bnm,b nm,gbhjkggzhjv ujtvzlh  zufghjklgvhjv zhjgfvh");
-  echo_test();
+  PRNTLN("APPARTUS PROJEKT65 Bootloader");
+  PRNTLN("w for start write to RAM");
+  PRNTLN("m for start monitor");
+  if (CHRIN() == 'm') EWOZ();
   while(1){
 
   }

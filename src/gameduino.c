@@ -1,9 +1,10 @@
 #include "gameduino.h"
 #include "spi.h"
-#include "gd.h"
+
 
 char spr;
-
+char _posx;
+char _posy;
 
 
 
@@ -105,6 +106,74 @@ void GD_fill(unsigned addr, char v, unsigned count)
   _end();
 }
 
+void GD_res_cur(){
+  _posx = 0;
+  _posy = 0;
+}
+
+void GD_set_cur(char x, char y){
+  _posx = x;
+  _posy = y;
+}
+
+void GD_cursor_LEFT(){
+  ++_posx;
+  if (_posx >=49) {
+    _posx = 0;
+    ++_posy;
+  }
+  GD_cursor_DOWN();
+}
+
+void GD_cursor_UP(){
+
+}
+
+void GD_cursor_DOWN(){
+  if (_posy >= 36){
+    _posy = 0;
+  }
+}
+
+void GD_prtchar(char x, char y, char c)
+{
+  _wstart((y << 6) + x);
+    spi_write(c);
+  _end();
+}
+
+
+void GD_Print_char(char c){
+  if (c == 0x0D) GD_NewLine();
+  GD_prtchar(_posx, _posy,c);
+
+}
+
+
+
+void GD_NewLine(){
+  _posx = 0;
+  ++_posy;
+
+  if (_posy >= 36){
+    _posy = 0;
+  }
+}
+
+void GD_Printnl(const char *s){
+  GD_Print(s);
+  GD_NewLine();
+}
+
+void GD_Print(const char *s)
+{
+  while (*s){
+    GD_Print_char(*s++);
+    GD_cursor_LEFT();
+  }
+
+  _end();
+}
 
 
 void GD_sprite(char spr, int x, int y, char image, char palette, char rot, char jk)

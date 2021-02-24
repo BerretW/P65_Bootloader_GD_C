@@ -43,7 +43,7 @@
 .segment "JMPTBL"
 
 _CHROUT:	JMP	__chrout		;$FF00	print CHAR from regA
-_CHRIN:	JMP	_acia_getc        		;$FF03	get char from buffer to regA
+_CHRIN:	JMP	_kbinput        		;$FF03	get char from buffer to regA
 _PRNTLN:	JMP	__output		;$FF06	put new line and a string with start address in regA and regX "lda #<(STRING),ldx #>(STRING),jsr PRNTLN"
 _PRNT:	JMP	__print		;$FF09	put a string with start address in regA and regX "lda #<(STRING),ldx #>(STRING),jsr PRNTLN"
 _PRNL:	JMP	__newline		;$FF0C	print a new line
@@ -65,9 +65,10 @@ _GET_INTERRUPT:	JMP	_GET_INT		;$FF39	Get Interrupt number 0 = IRQ0, 2 = IRQ1, 4 
 _ACIA_SCAN:	JMP	_acia_scan		;$FF3C	scan acia for character, if no return 0
 _SPI_INIT:	JMP	_spi_init		;$FF3F	initialize SPI interface
 _SPI_WRITE:	JMP	_spi_write		;$FF42	write data from A to SPI
+
 _GD_INIT:	JMP	_GD_Init		;$FF45	initialize GD and clear screen
-_GD_CHROUT:	JMP	_GD_print		;$FF48	Print character at cursor position
+_GD_CHROUT:	JMP	_GD_Print_char		;$FF48	Print character at cursor position
 _GD_WRITE8:	JMP	_GD_WR_8		;$FF4B	write data to setup address
 _GD_CLR:	JMP	_CLR_scr		;$FF4E	Clear screen
 _GD_WRITE16:	JMP	_GD_WR_16		;$FF51	write 16bit data to setup address
-_GD_SET_CUR:	JMP	_GD_set_cur_pos		;$FF54	set cursor position
+_GD_SET_CUR:	JMP	_GD_set_cur		;$FF54	set cursor position
