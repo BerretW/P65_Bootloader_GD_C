@@ -25,6 +25,7 @@ _delay_hi:				.res 1
 .export _INTE
 .export _INTD
 .export _GET_INT
+.export _write_to_RAM
 
 .export __chrout
 .export __output
@@ -127,6 +128,28 @@ _INTE:  CLI
         RTS
 _INTD:  SEI
         RTS
+
+        _write_to_RAM:
+        				        LDY #0
+        				        LDA #<(RAMDISK_START)
+        				        LDX #>(RAMDISK_START)
+        				        STA ptr1
+        				        STX ptr1 + 1
+
+        @write:			    JSR _ACIA_IN
+                				;JSR _lcd_putc
+                				STA (ptr1), Y
+                				INY
+                				CPY #$0
+                				BNE @end
+                				INX
+                				STX ptr1 + 1
+                				CPX #>(RAMDISK_END+1)
+                				BNE @end
+                				JMP (RAMDISK_RESET_VECTOR)
+        @end:			      JMP @write
+
+
 
 
 _delay:
