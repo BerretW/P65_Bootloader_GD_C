@@ -30,16 +30,16 @@
 .export	_ACIA_SCAN
 .export	_SPI_INIT
 .export	_SPI_WRITE
-.export	_GD_INIT
+.export	_GDINIT
 .export	_GD_CHROUT
 .export	_GD_WRITE8
 .export	_GD_CLR
 .export	_GD_WRITE16
-.export	_GD_SET_CUR
+.export	_GD_CUR_SET
 .export	_ACIA_IN
-.export	_ACIA_INIT
-
-
+.export	_ACIAINIT
+.export	_GD_CLR_TXT
+.export	_GD_BCK
 
 
 
@@ -67,11 +67,34 @@ _GET_INTERRUPT:	JMP	_GET_INT		;$FF39	Get Interrupt number 0 = IRQ0, 2 = IRQ1, 4 
 _ACIA_SCAN:	JMP	_acia_scan		;$FF3C	scan acia for character, if no return 0
 _SPI_INIT:	JMP	_spi_init		;$FF3F	initialize SPI interface
 _SPI_WRITE:	JMP	_spi_write		;$FF42	write data from A to SPI
-_GD_INIT:	JMP	_GD_Init		;$FF45	initialize GD and clear screen
+_GDINIT:	JMP	_GD_Init		;$FF45	initialize GD and clear screen
 _GD_CHROUT:	JMP	_GD_Print_char		;$FF48	Print character at cursor position
 _GD_WRITE8:	JMP	_GD_WR_8		;$FF4B	write data to setup address
 _GD_CLR:	JMP	_CLR_scr		;$FF4E	Clear screen
 _GD_WRITE16:	JMP	_GD_WR_16		;$FF51	write 16bit data to setup address
-_GD_SET_CUR:	JMP	_GD_set_cur		;$FF54	set cursor position
+_GD_CUR_SET:	JMP	_GD_set_cur		;$FF54	set cursor position
 _ACIA_IN:	JMP	_acia_getc		;$FF57	Wait and get for character from acia
-_ACIA_INIT:	JMP	_acia_init		;$FF5A	initialize acia
+_ACIAINIT:	JMP	_acia_init		;$FF5A	initialize acia
+_GD_CLR_TXT:	JMP	_CLR_txt		;$FF5D
+_GD_BCK:	JMP	_GD_background		;$FF60
+
+
+.import _init
+; ---------------------------------------------------------------------------
+; Non-maskable interrupt (NMI) service routine
+
+_nmi_int:  RTI                    ; Return from all NMI interrupts
+
+; ---------------------------------------------------------------------------
+; Maskable interrupt (IRQ) service routine
+_irq_int:   PHA
+            LDA #41
+            jsr _CHROUT
+            PLA
+            RTI
+
+.segment  "VECTORS"
+
+.addr      _nmi_int    ; NMI vector
+.addr      _init     ; Reset vector
+.addr      _irq_int    ; IRQ/BRK vector

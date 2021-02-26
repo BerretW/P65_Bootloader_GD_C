@@ -10,7 +10,7 @@ ca65 --cpu 65c02 spi.asm -o ..\output\spi.o
 ca65 --cpu 65c02 vectors.asm -o ..\output\vectors.o
 ca65 --cpu 65c02 acia.asm -o ..\output\acia.o
 ca65 --cpu 65c02 interrupts.asm -o ..\output\interrupts.o
-ca65 --cpu 65c02 jumptable.asm -o ..\output\jumptable.o
+ca65 --cpu 65c02 jumptable.asm -o ..\output\jumptable.o -l ..\output\jumptable.lst
 ca65 --cpu 65c02 pckybd.asm -o ..\output\pckybd.o
 ca65 --cpu 65c02 utils.asm -o ..\output\utils.o -l ..\output\utils.lst
 ca65 --cpu 65c02 sn76489.asm -o ..\output\sn76489.o
@@ -21,6 +21,6 @@ move *.s ..\output
 
 cd ..\output
 
-ld65 -C APP_RAM_DISK.cfg -m ram.map main.o spi.o acia.o gameduino.o gd.o interrupts.o vectors.o jumptable.o pckybd.o utils.o sn76489.o zeropage.o ewoz.o ..\library\p65.lib -o ..\output\RAM.bin
+ld65 -C APP_RAM_DISK.cfg -m ram.map main.o spi.o acia.o gameduino.o gd.o jumptable.o pckybd.o utils.o sn76489.o zeropage.o ewoz.o ..\library\p65.lib -o ..\output\RAM.bin
 
-cl65.exe -m rom.map main.o spi.o acia.o gameduino.o gd.o interrupts.o vectors.o jumptable.o pckybd.o utils.o sn76489.o zeropage.o ewoz.o -C ..\config\appartus.cfg ..\library\p65.lib -o ..\output\ROM.bin
+cl65.exe -m rom.map main.o spi.o acia.o gameduino.o gd.o jumptable.o pckybd.o utils.o sn76489.o zeropage.o ewoz.o -C ..\config\appartus.cfg ..\library\p65.lib -o ..\output\ROM.bin

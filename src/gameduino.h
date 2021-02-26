@@ -19,6 +19,8 @@ extern void GD_cursor_LEFT();
 extern void GD_cursor_RIGHT();
 extern void GD_cursor_UP();
 extern void GD_cursor_DOWN();
+extern void GD_background(char b);
+extern void CLR_txt();
 
 extern void GD_fill(unsigned addr, char v, unsigned count);
 extern void GD_wr16(unsigned addr, unsigned v);
@@ -30,6 +32,9 @@ extern void GD_ascii();
 extern void GD_copy(unsigned addr, char *src, int count);
 
 #define RGB(r,g,b) ((((r) >> 3) << 10) | (((g) >> 3) << 5) | ((b) >> 3))
+#define COLS          50
+#define ROWS          37
+
 #define TRANSPARENT (1 << 15) // transparent for chars and sprites
 
 #define RAM_PIC     0x0000    // Screen Picture, 64 x 64 = 4096 bytes

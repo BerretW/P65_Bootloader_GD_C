@@ -1,4 +1,12 @@
-.include "io.inc65"
+
+;SPI registerss
+
+SPI_DATA   = $C000
+SPI_CSSEL		=	SPI_DATA + 3
+SPI_STATUS	=	SPI_DATA + 1
+SPI_DIV     = SPI_DATA + 2
+SPI_CS			= $0			;CS0 = 14, CS1=13, CS2=11, CS3=7
+
 
 ;.import popa, popax
 .importzp tmp1, tmp2,tmp3

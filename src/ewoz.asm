@@ -289,9 +289,19 @@ WAIT:       BIT DSP         ; bit (B7) cleared yet?
             PHA
             PHX
             PHY
+
+            PHA
             JSR _CHROUT
+            JSR _GD_cursor_RIGHT
+            PLA
+            CMP #$08
+            BNE @end
             JSR _GD_cursor_LEFT
-            PLY
+            JSR _GD_cursor_LEFT
+            LDA #$20
+            JSR _GD_CHROUT
+
+@end:       PLY
             PLX
             PLA
 .endif

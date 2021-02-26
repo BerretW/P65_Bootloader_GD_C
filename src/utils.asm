@@ -31,6 +31,8 @@ _delay_hi:				.res 1
 .export __output
 .export __print
 .export __newline
+.export _restart
+.export _start_ram
 
 .segment "CODE"
 
@@ -78,10 +80,14 @@ _echo_test:         JSR _GD_res_cur
 @lll:               JSR _KBINPUT
                     STA _in_char
                     JSR _CHROUT
-                    JSR _GD_cursor_LEFT
+                    ;JSR _GD_cursor_RIGHT
                     JMP @lll
 
+_restart:           PLA             ;clean stack
+                    JMP _RST
 
+_start_ram:         PLA
+                    JMP (RAMDISK_RESET_VECTOR)
 
 _via_test:	LDA #$FF
 						STA VIA2_DDRB
