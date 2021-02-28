@@ -5,12 +5,15 @@
 #include "utils.h"
 #include "jumptable.h"
 #include "ewoz.h"
-
+#include "pckybd.h"
 
 void setup(){
+  init_vec();
   ACIAINIT();
   GDINIT();
   KBINIT();
+  GD_BCK(6);
+  INTDI();
 }
 
 
@@ -20,42 +23,53 @@ void main(void) {
   int x ;
   setup();
 
-  PRNTLN("APPARTUS PROJEKT65 Bootloader RAM");
+  PRNL();
+  PRNTLN("APPARTUS PROJEKT65 Bootloader");
   PRNTLN("w for start write to RAM");
   PRNTLN("m for start monitor");
-  c = CHRIN();
+
 
   while(1){
-    if (c == 'm'){
-      GD_CLR_TXT();
-      GD_CUR_SET(0,0);
-      EWOZ();
+    c = CHRIN();
+
+    switch (c){
+      case 'm':
+        GD_CLR_TXT();
+        GD_CUR_SET(0,0);
+        GD_BCK(5);
+        EWOZ();
+      break;
+      case 'w':
+        GD_BCK(2);
+        PRNTLN("Cekam na data pro zapis do RAM");
+        write_to_RAM();
+      break;
+      case 't':
+        GD_BCK(i);
+        ++i;
+        if (i >= 16) i = 0;
+      break;
+      case 'v':
+        via_test();
+      break;
+      case 'e':
+        echo_test();
+      break;
+      case 0x12:
+        restart();
+      break;
+      case 's':
+        start_ram();
+      break;
+      case 0x03:
+        GD_CLR_TXT();
+      break;
+
+      default:
+
+      break;
     }
-    if (c == 'w') {
-      PRNTLN("Cekam na data pro zapis do RAM");
-      write_to_RAM();
-    }
-    if (c == 't') {
-      GD_BCK(i);
-      for (x = 0; x <400; ++x) SHDLY();
-      ++i;
-      if (i >= 16) i = 0;
-    }
-    if (c == 'v') {
-      via_test();
-    }
-    if (c == 'e') {
-      echo_test();
-    }
-    if (c == 'r') {
-      restart();
-    }
-    if (c == 's') {
-      start_ram();
-    }
-    if (c == 'c') {
-      GD_CLR_TXT();
-      c = CHRIN();
-    }
+
+
   }
 }

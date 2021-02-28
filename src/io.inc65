@@ -28,9 +28,7 @@ DUARTROPR    = DUART+$F
 DUART_STATUS_RX_RDY    = 1 << 0
 DUART_STATUS_TX_RDY    = 1 << 2
 
-;BANK registers
 
-BANK_BASE   = $00
 
 ; ACIA registers
 

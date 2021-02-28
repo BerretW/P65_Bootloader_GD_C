@@ -78,20 +78,17 @@ _ACIAINIT:	JMP	_acia_init		;$FF5A	initialize acia
 _GD_CLR_TXT:	JMP	_CLR_txt		;$FF5D
 _GD_BCK:	JMP	_GD_background		;$FF60
 
-
-.import _init
+.segment "CODE"
 ; ---------------------------------------------------------------------------
 ; Non-maskable interrupt (NMI) service routine
 
-_nmi_int:  RTI                    ; Return from all NMI interrupts
+_nmi_int:     JMP (_nmi_vec)
+                                 ; Return from all NMI interrupts
 
 ; ---------------------------------------------------------------------------
 ; Maskable interrupt (IRQ) service routine
-_irq_int:   PHA
-            LDA #41
-            jsr _CHROUT
-            PLA
-            RTI
+_irq_int:     JMP (_irq_vec)
+
 
 .segment  "VECTORS"
 

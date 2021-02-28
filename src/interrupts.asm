@@ -1,51 +1,22 @@
 
-; ---------------------------------------------------------------------------
-; interrupt.s
-; ---------------------------------------------------------------------------
-;
-; Interrupt handler.
-;
-; Checks for a BRK instruction and returns from all valid interrupts.
+.setcpu		"65C02"
+.smart		on
+.autoimport	on
+.case		on
 
-;.import   _stop
-.import   _acia_putc
-.export   _irq_int, _nmi_int
+.export _IRQ_ISR
+.export _NMI_ISR
 
-.segment  "CODE"
 
-.PC02                             ; Force 65C02 assembly mode
+.segment "CODE"
 
-; ---------------------------------------------------------------------------
-; Non-maskable interrupt (NMI) service routine
+_NMI_ISR:
+                  RTI
 
-_nmi_int:  RTI                    ; Return from all NMI interrupts
 
-; ---------------------------------------------------------------------------
-; Maskable interrupt (IRQ) service routine
-_irq_int:   PHA
-            LDA #41
-            jsr _acia_putc
-            PLA
-            RTI
+_IRQ_ISR:         SEI
+                  JSR _KBSCAN
+                  BEQ @end
 
-;_irq_int1:  PHX                    ; Save X register contents to stack
-;           TSX                    ; Transfer stack pointer to X
-;           PHA                    ; Save accumulator contents to stack
-;           INX                    ; Increment X so it points to the status
-;           INX                    ;   register value saved on the stack
-;           LDA $100,X             ; Load status register contents
-;           AND #$10               ; Isolate B status bit
-;           BNE break              ; If B = 1, BRK detected
-
-; ---------------------------------------------------------------------------
-; IRQ detected, return
-
-irq:       PLA                    ; Restore accumulator contents
-           PLX                    ; Restore X register contents
-           RTI                    ; Return from all IRQ interrupts
-
-; ---------------------------------------------------------------------------
-; BRK detected, stop
-
-;break:     JMP _stop              ; If BRK is detected, something very bad
-                                  ;   has happened, so stop running
+@end:             CLI
+                  RTI

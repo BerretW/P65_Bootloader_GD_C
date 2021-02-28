@@ -10,7 +10,7 @@ _delay_hi:				.res 1
 .autoimport	on
 .case		on
 .debuginfo	off
-.importzp	sp, sreg, regsave, regbank, _in_char
+.importzp	sp, sreg, regsave, regbank, _in_char , BANK_BASE
 .importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 .macpack	longbranch
 
@@ -33,8 +33,20 @@ _delay_hi:				.res 1
 .export __newline
 .export _restart
 .export _start_ram
-
+.export _init_vec
 .segment "CODE"
+
+
+_init_vec:          LDA #<_IRQ_ISR
+                    STA _irq_vec
+                    LDA #>_IRQ_ISR
+                    STA _irq_vec + 1
+                    LDA #<_NMI_ISR
+                    STA _nmi_vec
+                    LDA #>_NMI_ISR
+                    STA _nmi_vec + 1
+                    RTS
+
 
 __output:           PHA
                     PHX

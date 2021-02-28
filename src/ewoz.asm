@@ -41,7 +41,7 @@
 ;MULTIPORT = 1
 KEYBOARD = 1
 ;CONSOLE = 1
-
+CTRL_C_CLR = 1
 ; Lines with comments starting with "*" indicate code changes from the original WozMon.
 
 .if .defined(MULTIPORT)
@@ -289,8 +289,21 @@ WAIT:       BIT DSP         ; bit (B7) cleared yet?
             PHA
             PHX
             PHY
+.if .defined(CTRL_C_CLR)
+            CMP #$03
+            BNE @print
+            JSR _GD_res_cur
+            JSR _CLR_txt
+            LDA #0
+.endif
+@print:     CMP #$12
+            BNE @print1
+            PLY
+            PLX
+            PLY
+            JMP _init
 
-            PHA
+@print1:    PHA
             JSR _CHROUT
             JSR _GD_cursor_RIGHT
             PLA

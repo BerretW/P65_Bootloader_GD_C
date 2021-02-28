@@ -1,15 +1,16 @@
-; ---------------------------------------------------------------------------
-; vectors.s
-; ---------------------------------------------------------------------------
-;
-; Defines the interrupt vector table.
 
-.import   _init
-.import   _nmi_int
-.import   _irq_int
+.setcpu		"65C02"
+.smart		on
+.autoimport	on
+.case		on
 
-.segment  "VECTORS"
+.export _nmi_vec
+.export _irq_vec
+.export __OUTPUT, __INPUT
 
-.addr      _nmi_int    ; NMI vector
-.addr      _init       ; Reset vector
-.addr      _irq_int    ; IRQ/BRK vector
+.segment "DATA"
+
+_nmi_vec  = $300
+_irq_vec  = $302
+__OUTPUT  = $304
+__INPUT   = $305

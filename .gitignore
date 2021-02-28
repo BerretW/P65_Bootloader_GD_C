@@ -3,10 +3,13 @@
 
 # Object files
 *.o
+*.s
 *.ko
 *.obj
 *.elf
 output
+lst
+
 # Linker output
 *.ilk
 *.map
