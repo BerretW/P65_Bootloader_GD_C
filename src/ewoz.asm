@@ -30,22 +30,22 @@
 ; START @ $7000
 
 ; Uncomment one of the two lines below (but not both).
-; Set MULTIPORT to 1 in order to perform i/o using the serial port on
+; Set SERIAL to 1 in order to perform i/o using the serial port on
 ; the Multi Port I/O board for the Briel Replica 1. Set console to 1
 ; in order to use the built in console/display for i/o.
 .setcpu "65C02"
 .smart		on
 .autoimport	on
 .export _EWOZ
+.include "io.inc65"
 
-;MULTIPORT = 1
-KEYBOARD = 1
-;CONSOLE = 1
-CTRL_C_CLR = 1
+
+
+
 ; Lines with comments starting with "*" indicate code changes from the original WozMon.
 
-.if .defined(MULTIPORT)
-ACIA        = $CF30
+.if .defined(SERIAL)
+ACIA        = ACIA_BASE
 ACIA_CTRL   = ACIA+3
 ACIA_CMD    = ACIA+2
 ACIA_SR     = ACIA+1
@@ -53,7 +53,7 @@ ACIA_DAT    = ACIA
 .endif
 
 .if .defined(KEYBOARD)
-ACIA        = $CF30
+ACIA        = ACIA_BASE
 ACIA_CTRL   = ACIA+3
 ACIA_CMD    = ACIA+2
 ACIA_SR     = ACIA+1
@@ -93,7 +93,7 @@ CRCCHECK    = $30
 
 _EWOZ:  	    CLD             ; Clear decimal arithmetic mode.
             CLI
-.if .defined(MULTIPORT)
+.if .defined(SERIAL)
             LDA #$1F        ;* Init ACIA to 19200 Baud.
             STA ACIA_CTRL
             LDA #$0B        ;* No Parity.
@@ -140,7 +140,7 @@ BACKSPACE:  DEY             ; Backup text index.
             LDA #$88        ;*Backspace again to get to correct pos.
             JSR ECHO
 
-.if .defined(MULTIPORT)
+.if .defined(SERIAL)
 NEXTCHAR:   LDA ACIA_SR     ;*See if we got an incoming char
             AND #$08        ;*Test bit 3
             BEQ NEXTCHAR    ;*Wait for character
@@ -272,7 +272,7 @@ PRHEX:      AND #$0F        ; Mask LSD for hex print.
 ECHO:       PHA             ;*Save A
             AND #$7F        ;*Change to "standard ASCII"
 
-.if .defined(MULTIPORT)
+.if .defined(SERIAL)
             STA ACIA_DAT    ;*Send it.
 WAIT:       LDA ACIA_SR     ;*Load status register for ACIA
             AND #$10        ;*Mask bit 4.
@@ -446,7 +446,7 @@ DONESECOND: AND #$0F
             RTS
 
 
-.if .defined(MULTIPORT)
+.if .defined(SERIAL)
 GETCHAR:    LDA ACIA_SR     ; See if we got an incoming char
             AND #$08        ; Test bit 3
             BEQ GETCHAR     ; Wait for character

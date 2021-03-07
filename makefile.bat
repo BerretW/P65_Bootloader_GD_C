@@ -9,7 +9,7 @@ ca65 --cpu 65c02 gd.asm -o ..\output\gd.o
 ca65 --cpu 65c02 spi.asm -o ..\output\spi.o
 ca65 --cpu 65c02 acia.asm -o ..\output\acia.o
 ca65 --cpu 65c02 jumptable.asm -o ..\output\jumptable.o -l ..\lst\jumptable.lst
-ca65 --cpu 65c02 pckybd.asm -o ..\output\pckybd.o
+ca65 --cpu 65c02 pckybd.asm -o ..\output\pckybd.o -l ..\lst\pckybd.lst
 ca65 --cpu 65c02 utils.asm -o ..\output\utils.o -l ..\lst\utils.lst
 ca65 --cpu 65c02 sn76489.asm -o ..\output\sn76489.o
 ca65 --cpu 65c02 zeropage.asm -o ..\output\zeropage.o -l ..\lst\zeropage.lst

@@ -1,7 +1,7 @@
 
 ;SPI registerss
 
-SPI_DATA   = $C000
+SPI_DATA   = $CF60
 SPI_CSSEL		=	SPI_DATA + 3
 SPI_STATUS	=	SPI_DATA + 1
 SPI_DIV     = SPI_DATA + 2
@@ -85,7 +85,7 @@ _spi_end:						PHA
 										PLA
 										RTS
 
-spi_delay:					LDY #$4
+spi_delay:					LDY #$1
 @_delay_1:					DEY
 										BNE @_delay_1
 										RTS

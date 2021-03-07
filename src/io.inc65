@@ -1,3 +1,11 @@
+;;Dostupné periferie
+
+;SERIAL = 1
+KEYBOARD = 1
+;CONSOLE = 1
+CTRL_C_CLR = 1
+
+
 ;DUART
 
 DUART        = $CE00

@@ -161,8 +161,8 @@
 ;
 ; I/O Port definitions
 
-kbportreg      =     $CF11            ; 6522 IO port register B
-kbportddr      =     $CF13             ; 6522 IO data direction register B
+kbportreg      =     VIA1_ORA            ; 6522 IO port register B
+kbportddr      =     VIA1_DDRA             ; 6522 IO data direction register B
 clk            =     $10               ; 6522 IO port clock bit mask (PB4)
 data           =     $20               ; 6522 IO port data bit mask  (PB5)
 
@@ -512,7 +512,7 @@ kbsend:         sta   byte              ; save byte to send
                lda   kbportddr         ;
                ora   #$30              ;  bit bits high (change if port bits change)
                sta   kbportddr         ; set outputs, clk=0, data=1
-               lda   #$40              ; 1Mhz cpu clock delay (delay = cpuclk/62500)
+               lda   #$10              ; 1Mhz cpu clock delay (delay = cpuclk/62500)
 kbsendw:        dec                     ;
                bne   kbsendw           ; 64uS delay
                ldy   #$00              ; parity counter

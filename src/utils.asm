@@ -102,17 +102,17 @@ _start_ram:         PLA
                     JMP (RAMDISK_RESET_VECTOR)
 
 _via_test:	LDA #$FF
-						STA VIA2_DDRB
+						STA VIA2_DDRA
 						LDA #$55
-						STA VIA2_ORB
+						STA VIA2_ORA
 						JSR _delay
 						LDA #$AA
-						STA VIA2_ORB
+						STA VIA2_ORA
 						JSR _delay
 						JMP _via_test
 
 via_loop:			JSR _CHRIN
-						STA VIA2_ORB
+						STA VIA2_ORA
 						JSR _CHROUT
 						JMP via_loop
 ; ---------------------------------------------------------------
