@@ -77,9 +77,7 @@ _acia_put_newline:  PHA
 ; print string then new line
 ;---------------
 _acia_print_nl:  JSR     _acia_puts
-
                  JMP     _acia_put_newline
-                RTS
 
 
 ; char acia_getc()

@@ -12,5 +12,6 @@
 
 _nmi_vec  = $300
 _irq_vec  = $302
+
 __OUTPUT  = $304
 __INPUT   = $305

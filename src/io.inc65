@@ -1,46 +1,8 @@
-;;Dostupné periferie
-
-;SERIAL = 1
-KEYBOARD = 1
-;CONSOLE = 1
-CTRL_C_CLR = 1
-
-
-;DUART
-
-DUART        = $CE00
-DUARTMRA     = DUART
-DUARTSRA     = DUART+$1
-DUARTCSRA    = DUART+$1
-DUARTCRA     = DUART+$2
-DUARTRXA     = DUART+$3
-DUARTTXA     = DUART+$3
-DUARTIPCR    = DUART+$4
-DUARTACR     = DUART+$4
-DUARTISR     = DUART+$5
-DUARTIMR     = DUART+$5
-DUARTCTU     = DUART+$6
-DUARTCTPU    = DUART+$6
-DUARTCTL     = DUART+$7
-DUARTCTPL    = DUART+$7
-DUARTMRB     = DUART+$8
-DUARTSRB     = DUART+$9
-DUARTCSRB    = DUART+$9
-DUARTCRB     = DUART+$A
-DUARTRXB     = DUART+$B
-DUARTTXB     = DUART+$B
-DUARTIVEC    = DUART+$C
-DUARTIPR     = DUART+$D
-DUARTSOPR    = DUART+$E
-DUARTROPR    = DUART+$F
-DUART_STATUS_RX_RDY    = 1 << 0
-DUART_STATUS_TX_RDY    = 1 << 2
-
 
 
 ; ACIA registers
 
-ACIA_BASE    = $CF30
+ACIA_BASE    = $C800
 ACIA_DATA    = ACIA_BASE
 ACIA_STATUS  = ACIA_BASE + 1
 ACIA_COMMAND = ACIA_BASE + 2
@@ -106,7 +68,7 @@ ACIA_STATUS_FRAME_ERR  = 1 << 1
 ACIA_STATUS_PARITY_ERR = 1 << 0
 
 ; VIA1 registers
-VIA1_BASE   = $CF00
+VIA1_BASE   = $CC00
 VIA1_ORB    = VIA1_BASE
 VIA1_IRB    = VIA1_BASE
 VIA1_ORA    = VIA1_BASE + 1
@@ -129,7 +91,7 @@ VIA1_IRA_NH = VIA1_BASE + 15
 
 
 ; VIA2 registers
-VIA2_BASE   = $CF10
+VIA2_BASE   = $CC80
 VIA2_ORB    = VIA2_BASE
 VIA2_IRB    = VIA2_BASE
 VIA2_ORA    = VIA2_BASE + 1
@@ -172,36 +134,24 @@ VIA_PB5 = 1 << 5
 VIA_PB6 = 1 << 6
 VIA_PB7 = 1 << 7
 
-;LCD
-LCD_VIA_BASE 	= VIA1_BASE
-LCD_VIA_DDRA 	= LCD_VIA_BASE+3
-LCD_VIA_PORTA  	= LCD_VIA_BASE+1
-LCD_VIA_DDRB 	= LCD_VIA_BASE+2
-LCD_VIA_PORTB  	= LCD_VIA_BASE
 
-LCD_E 		= %00000001
-LCD_RS 		= %00000100
-LCD_1LINE 	= $80
-LCD_2LINE	= $C0
+;UTF special codes
 
-
-;sn76489
-SN_VIA_BASE 	= VIA2_BASE
-SN_VIA_DDRA 	= SN_VIA_BASE+3
-SN_VIA_PORTA  	= SN_VIA_BASE+1
-SN_VIA_DDRB 	= SN_VIA_BASE+2
-SN_VIA_PORTB  	= SN_VIA_BASE
-
-
-;PS2 keyboards
-KB_BASE       = VIA2_BASE
-KB_PORT       = KB_BASE
-KB_DDR        = KB_BASE +2
-KB_CLK_MSK    = $10
-KB_DTA_MSK    = $20
+UTF_ETX		= $03			; Break character
+UTF_BEL		= $07
+CRSR_LEFT	= $08
+CRSR_RIGHT	= $09
+CRSR_DOWN	= $0a
+CRSR_UP		= $0b
+UTF_ACK		= $06			; Used for the copy key in this implementation
+UTF_FF		= $0c
+UTF_CR		= $0d
+UTF_BRK		= $1a			; Debug - drop in to monitor
+UTF_DEL		= $7f
+UTF_SPECIAL = $20
 
 ;* VDP
-VDP_MODE0		= $C300
+VDP_MODE0		= $CF00
 VDP_MODE1		= VDP_MODE0+1
 VDP_STATUS		= VDP_MODE0+1
 VDP_ADDR		= VDP_MODE0+1
@@ -221,22 +171,6 @@ VDP_SPRMAG    = %00000001
 
 VDP_EXTVID    = %00000001 ;at reg 0
 VDP_GMODE2    = %00000010 ;at reg 0
-
-;UTF special codes
-
-UTF_ETX		= $03			; Break character
-UTF_BEL		= $07
-CRSR_LEFT	= $08
-CRSR_RIGHT	= $09
-CRSR_DOWN	= $0a
-CRSR_UP		= $0b
-UTF_ACK		= $06			; Used for the copy key in this implementation
-UTF_FF		= $0c
-UTF_CR		= $0d
-UTF_BRK		= $1a			; Debug - drop in to monitor
-UTF_DEL		= $7f
-UTF_SPECIAL = $20
-
 
 
 RAMDISK_START = $6000

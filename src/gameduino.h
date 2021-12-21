@@ -2,6 +2,7 @@
 extern void GD_Begin();
 extern void GD_End();
 extern void GD_Init();
+extern char GD_Test();
 extern void GD_xhide();
 extern void _start(unsigned addr);
 extern void _wstart(unsigned addr);
@@ -21,6 +22,7 @@ extern void GD_cursor_UP();
 extern void GD_cursor_DOWN();
 extern void GD_background(char b);
 extern void CLR_txt();
+extern void CLR_scr();
 
 extern void GD_fill(unsigned addr, char v, unsigned count);
 extern void GD_wr16(unsigned addr, unsigned v);
@@ -60,8 +62,8 @@ extern void GD_copy(unsigned addr, char *src, int count);
 #define MODULATOR     0x2814
 #define VIDEO_MODE    0x2815
 
-#define   MODE_800x600_72   0
-#define   MODE_800x600_60   1
+#define MODE_800x600_72   0
+#define MODE_800x600_60   1
 
 #define SCREENSHOT_Y  0x281e
 

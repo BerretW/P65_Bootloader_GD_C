@@ -100,7 +100,9 @@ void GD_wr16(unsigned addr, unsigned v)
   _end();
 }
 
-
+char GD_Test(){
+  return GD_rd(0x2800);
+}
 unsigned char GD_rd16(unsigned addr){
   unsigned char r;
 
@@ -113,7 +115,7 @@ unsigned char GD_rd16(unsigned addr){
 }
 
 void _start(unsigned addr){
-  spi_begin(14);
+  spi_begin(1);
   spi_write_16_addr(addr);
 }
 

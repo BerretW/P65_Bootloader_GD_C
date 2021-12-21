@@ -1,3 +1,4 @@
+.include "io.inc65"
 
 .setcpu		"65C02"
 .smart		on
@@ -10,13 +11,27 @@
 
 .segment "CODE"
 
-_NMI_ISR:
+_NMI_ISR:         PHA
+                  PHX
+                  PHY
+                  JSR _NMI_Event
+                  LDA #$4D
+                  STA VIA2_T1C_H
+@end:             PLY
+                  PLX
+                  PLA
                   RTI
 
 
 _IRQ_ISR:         SEI
-                  JSR _KBSCAN
-                  BEQ @end
-
-@end:             CLI
+                  PHA
+                  PHX
+                  PHY
+                  ;LDA #$FF
+                  ;STA VIA1_T1C_H
+                  JSR _IRQ_Event
+                  CLI
+                  PLY
+                  PLX
+                  PLA
                   RTI

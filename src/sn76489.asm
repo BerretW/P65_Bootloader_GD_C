@@ -29,6 +29,7 @@ _sn_init:
             STA SN_VIA_DDRB
             LDA #%11111111
             STA SN_VIA_PORTB
+
             LDA #$9F
           	JSR _sn_write_data
 						LDA #$BF
@@ -41,9 +42,9 @@ _sn_init:
 
 _sn_write_data:
 						STA SN_VIA_PORTA
-						LDA #%11111110
+						LDA #%11110111
 						STA SN_VIA_PORTB
 						JSR __delay2
-						LDA #%11111111
+						LDA #%11110111
 						STA SN_VIA_PORTB
             RTS
