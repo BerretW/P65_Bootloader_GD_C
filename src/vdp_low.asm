@@ -21,7 +21,7 @@ vdp_delay:			.res 1
 .autoimport	on
 .case		on
 .debuginfo	off
-.importzp	sp, sreg, regsave, regbank
+.importzp	sp, sreg, regsave, regbank, tmpstack
 .importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4, vdp_d
 .macpack	longbranch
 

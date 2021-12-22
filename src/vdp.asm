@@ -1,8 +1,15 @@
 .include "io.inc65"
 .include "macros_65C02.inc65"
-.include "font.h"
+.include "fonts\tms9918font2.asm"
 
-
+.macro vdp_write_vram value
+pha
+lda #<(value)
+sta VDP_MODE1
+lda #($40 | >value)
+sta VDP_MODE1
+pla
+.endmacro
 
 .zeropage
 _vdp_reg0:			.res 1
@@ -15,6 +22,7 @@ vdp_addr_pat: .res 2				;* Address of pattern table
 vdp_addr_spa: .res 2				;* Address of sprite pattern table
 vdp_addr_spp: .res 2				;* Address of sprite position table
 vdp_bord_col: .res 2
+
 .globalzp _vdp_reg0, _vdp_reg1
 
 .smart		on
@@ -34,23 +42,17 @@ vdp_bord_col: .res 2
 ;_init:
 
 _vdp_init:          CLD
-                    JSR clear_vram
+                  ;  JSR clear_vram
+                    JSR vdp_set_txt_mode
                     LDA #0
                     JSR gr_init_screen
-                    ;JSR vdp_set_txt_mode
 
-                    LDA #1
-                    JSR _vdp_set_bgc
-                    LDA #$D
-                    JSR _vdp_set_fnc
-
-                    LDX #$1F
-                    LDA #$7
-                    JSR _vdp_wr_reg
-                    LDX #0
-                    LDY #0
-                    JSR gr_set_cur
                     RTS
+
+
+
+
+
 
 _VDP_print_char:    JSR gr_put_byte
                     RTS
@@ -528,5 +530,5 @@ vdp_base_table_txt:
                     	.Byte	0				; R5 Sprite attribute table value
                     	.WORD	0				; Sprite pattern table NA
                     	.Byte	0				; R6 Sprite pattern table value
-                    	.Byte	$fD			; R7 White f/gnd, magenta background
+                    	.Byte	$1F			; R7 White f/gnd, magenta background
 mod_sz_vdp_e:

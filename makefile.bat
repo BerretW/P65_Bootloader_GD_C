@@ -28,9 +28,9 @@ move *.s ..\output
 
 cd ..\output
 
-ld65 -C ..\config\APP_RAM_DISK.cfg -m ram.map main.o acia.o jumptable.o routines.o utils.o spi.o sd.o pckybd.o gameduino.o saa1099.o vdp.o vdp_low.o vdp_graph.o zeropage.o ewoz.o vectors.o interrupts.o ..\library\p65.lib -o ..\output\RAM.bin
+ld65 -C ..\config\APP_RAM_DISK.cfg -m ram.map main.o acia.o jumptable.o routines.o utils.o pckybd.o saa1099.o vdp.o vdp_low.o vdp_graph.o zeropage.o ewoz.o vectors.o interrupts.o ..\library\p65.lib -o ..\output\RAM.bin
 
-ld65 -C ..\config\APP_ROM_DISK.cfg -m rom.map main.o acia.o jumptable.o routines.o utils.o spi.o sd.o pckybd.o gameduino.o saa1099.o vdp.o vdp_low.o vdp_graph.o zeropage.o ewoz.o vectors.o interrupts.o ..\library\p65.lib -o ..\output\ROM.bin
+ld65 -C ..\config\APP_ROM_DISK.cfg -m rom.map main.o acia.o jumptable.o routines.o utils.o pckybd.o saa1099.o vdp.o vdp_low.o vdp_graph.o zeropage.o ewoz.o vectors.o interrupts.o ..\library\p65.lib -o ..\output\ROM.bin
 
 
 e:\Projekt65\hbc-56-master\emulator\bin\Hbc56Emu_d.exe --rom ..\output\ROM.bin

@@ -6,10 +6,7 @@
 #include "jumptable.h"
 #include "ewoz.h"
 #include "acia.h"
-#include "spi.h"
-#include "sd.h"
 #include "pckybd.h"
-#include "gameduino.h"
 #include "saa1099.h"
 #include "vdp.h"
 
@@ -100,40 +97,23 @@ void setup(){
   init_vec();
   irq_init();
   nmi_init();
+
   vdp_init();
+  vdp_print_nl("VDP initialised");
+  //acia_print_nl("VDP initialised");
 
   //acia_init();
   //acia_print_nl("ACIA initialised");
-  while(){
-    vdp_print_nl("ACIA initialised");
-  }
+  //vdp_print_nl("ACIA initialised");
 
+
+  EWOZ();
+  vdp_print_nl("EWOZ initialised");
 
   if (kb_check() == 0x00){
     kb_init();
     acia_print_nl("PS2 found");
   } else acia_print_nl("PS2 NOT found");
-
-
-  if (spi_test() == 0xFF) {
-    acia_print_nl("SPI found");
-    spi_init();
-    acia_print_nl("SPI initialised");
-
-    //SD_INIT();
-
-    if (GD_rd(0x2800) == 0x6d){
-      acia_print_nl("GD found");
-      //CLR_txt();
-      //CLR_scr();
-      //GD_Init();
-      GD_res_cur();
-      GD_set_cur(0,2);
-      GD_Printnl("GD initialised");
-      acia_print_nl("GD initialised");
-    } else acia_print_nl("GD NOT found");
-
-  } else acia_print_nl("SPI NOT found");
 
   saa_init();
   acia_print_nl("SAA Initialised");

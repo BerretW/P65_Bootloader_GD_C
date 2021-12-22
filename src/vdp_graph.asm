@@ -27,7 +27,6 @@ vdp_curstat:		.res		1		; Cursor status
 vdp_curval:		.res		1		; Cursor value on screen
 vdp_blank:		.res		1		; Screen blank value normally 32
 
-
 .data
 gr_screen_start: .res 2			; Start of screen memory in VDP
 gr_screen_size: .res 2			; Number of bytes screen occupies
@@ -275,7 +274,7 @@ gr_set_cur:
 
 	; First restore what is under the cursor
 	lda vdp_curval
-	jsr gr_put
+	;jsr gr_put							;dočasně vypnuto
 
 	; Now calculate the new cursor vram address
 	ldx gr_cur_x

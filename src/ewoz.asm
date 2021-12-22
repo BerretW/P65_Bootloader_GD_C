@@ -61,7 +61,7 @@ DSPCR       = $D013          ; PIA.B display control register
 
 IN          = $0200          ;*Input buffer
 
-.segment "ZP"
+.segment "ZEROPAGE"
 
 XAML        = $24            ;*Index pointers
 XAMH        = $25
@@ -238,7 +238,10 @@ ECHO:        PHA ;*Save A
 AND #$7F        ;*Change to "standard ASCII"
 STA ACIA_DAT    ;*Send it.
 JSR gr_put_byte
-@WAIT:       LDA ACIA_SR     ;*Load status register for ACIA
+
+@WAIT:        PLA
+              RTS
+LDA ACIA_SR     ;*Load status register for ACIA
 AND #$10        ;*Mask bit 4.
 BEQ    @WAIT    ;*ACIA not done yet, wait.
 PLA ;*Restore A
