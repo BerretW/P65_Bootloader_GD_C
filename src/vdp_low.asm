@@ -1,7 +1,7 @@
 .include "io.inc65"
-.include "macros_65c02.inc65"
+.include "macros_65C02.inc65"
 
-.zeropage
+.data
 
 vdp_delay:			.res 1
 
@@ -22,7 +22,7 @@ vdp_delay:			.res 1
 .case		on
 .debuginfo	off
 .importzp	sp, sreg, regsave, regbank
-.importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
+.importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4, vdp_d
 .macpack	longbranch
 
 
@@ -75,14 +75,14 @@ _vdp_rd_stat_reg:
 ;* Regs affected : none
 ;****************************************
 vdp_mem_wait:
-								phx								; 3
+								phaxy								; 3
 								ldx vdp_delay				; 3
 								beq vdp_mem_wait_end			; 3
 vdp_mem_wait_loop:
 								dex								; 2
 								bne	vdp_mem_wait_loop			; 3
 vdp_mem_wait_end:
-								plx								; 3
+								plaxy								; 3
 								rts
 
 ;****************************************

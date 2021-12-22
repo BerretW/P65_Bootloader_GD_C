@@ -1,5 +1,5 @@
 .include "io.inc65"
-.include "macros_65c02.inc65"
+.include "macros_65C02.inc65"
 
 
 
@@ -26,7 +26,7 @@ vdp_curoff:		.res		1		; Cursor off (0 = On)
 vdp_curstat:		.res		1		; Cursor status
 vdp_curval:		.res		1		; Cursor value on screen
 vdp_blank:		.res		1		; Screen blank value normally 32
-vdp_delay:		.res		1
+
 
 .data
 gr_screen_start: .res 2			; Start of screen memory in VDP

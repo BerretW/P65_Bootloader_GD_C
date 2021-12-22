@@ -102,9 +102,12 @@ void setup(){
   nmi_init();
   vdp_init();
 
-  acia_init();
-  acia_print_nl("ACIA initialised");
-  vdp_print_nl("ACIA initialised");
+  //acia_init();
+  //acia_print_nl("ACIA initialised");
+  while(){
+    vdp_print_nl("ACIA initialised");
+  }
+
 
   if (kb_check() == 0x00){
     kb_init();

@@ -1,5 +1,5 @@
 .include "io.inc65"
-.include "macros_65c02.inc65"
+.include "macros_65C02.inc65"
 .include "font.h"
 
 
@@ -21,7 +21,7 @@ vdp_bord_col: .res 2
 .autoimport	on
 .case		on
 .debuginfo	off
-.importzp	sp, sreg, regsave, regbank, vdp_delay,tmpstack
+.importzp	sp, sreg, regsave, regbank,tmpstack
 .importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 .macpack	longbranch
 
@@ -37,7 +37,7 @@ _vdp_init:          CLD
                     JSR clear_vram
                     LDA #0
                     JSR gr_init_screen
-                    JSR vdp_set_txt_mode
+                    ;JSR vdp_set_txt_mode
 
                     LDA #1
                     JSR _vdp_set_bgc
