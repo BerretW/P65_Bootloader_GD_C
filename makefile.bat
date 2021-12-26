@@ -5,12 +5,14 @@ cc65 -t none -O --cpu 65C02 main.c
 cc65 -t none -O --cpu 65c02 gameduino.c
 cc65 -t none -O --cpu 65c02 sd.c
 ca65 --cpu 65c02 main.s -o ..\output\main.o -l ..\lst\main.lst
+ca65 --cpu 65c02 stdlib.asm -o ..\output\stdlib.o -l ..\lst\stdlib.lst
 ca65 --cpu 65c02 gameduino.s -o ..\output\gameduino.o -l ..\lst\gameduino.lst
 ca65 --cpu 65c02 sd.s -o ..\output\sd.o -l ..\lst\sd.lst
 ca65 --cpu 65c02 gd.asm -o ..\output\gd.o
 ca65 --cpu 65c02 spi.asm -o ..\output\spi.o
 ca65 --cpu 65c02 acia.asm -o ..\output\acia.o
 ca65 --cpu 65c02 pckybd.asm -o ..\output\pckybd.o
+ca65 --cpu 65c02 lcd.asm -o ..\output\lcd.o  -l ..\lst\lcd.ls
 ca65 --cpu 65c02 saa1099.asm -o ..\output\saa1099.o  -l ..\lst\saa1099.ls
 ca65 --cpu 65c02 jumptable.asm -o ..\output\jumptable.o -l ..\lst\jumptable.lst
 ca65 --cpu 65c02 routines.asm -o ..\output\routines.o -l ..\lst\routines.lst
@@ -28,9 +30,9 @@ move *.s ..\output
 
 cd ..\output
 
-ld65 -C ..\config\APP_RAM_DISK.cfg -m ram.map main.o acia.o jumptable.o routines.o utils.o pckybd.o saa1099.o vdp.o vdp_low.o vdp_graph.o zeropage.o ewoz.o vectors.o interrupts.o ..\library\p65.lib -o ..\output\RAM.bin
+ld65 -C ..\config\APP_RAM_DISK.cfg -m ram.map main.o stdlib.o lcd.o acia.o jumptable.o routines.o utils.o pckybd.o saa1099.o vdp.o vdp_low.o vdp_graph.o zeropage.o ewoz.o vectors.o interrupts.o ..\library\p65.lib -o ..\output\RAM.bin
 
-ld65 -C ..\config\APP_ROM_DISK.cfg -m rom.map main.o acia.o jumptable.o routines.o utils.o pckybd.o saa1099.o vdp.o vdp_low.o vdp_graph.o zeropage.o ewoz.o vectors.o interrupts.o ..\library\p65.lib -o ..\output\ROM.bin
+ld65 -C ..\config\APP_ROM_DISK.cfg -m rom.map main.o stdlib.o lcd.o acia.o jumptable.o routines.o utils.o pckybd.o saa1099.o vdp.o vdp_low.o vdp_graph.o zeropage.o ewoz.o vectors.o interrupts.o ..\library\p65.lib -o ..\output\ROM.bin
 
 
-e:\Projekt65\hbc-56-master\emulator\bin\Hbc56Emu_d.exe --rom ..\output\ROM.bin
+e:\Projekt65\hbc-56-master\emulator\bin\Hbc56Emu_d.exe --lcd 1602 --keyboard --rom ..\output\ROM.bin

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <peekpoke.h>
 
 #include "utils.h"
 #include "jumptable.h"
@@ -9,6 +10,11 @@
 #include "pckybd.h"
 #include "saa1099.h"
 #include "vdp.h"
+#include "strings.h"
+#include "lcd.h"
+
+
+
 
 
 
@@ -89,31 +95,53 @@ void tune_playnote (char chan, char note, char volume) {
   saa_write_data(volume);
 }
 
+void lcd_setup(){
+  lcd_init();
+  lcd_displayOn();
+  lcd_cursorBlinkOn();
+}
 
 
 
 void setup(){
+  lcd_setup();
+  //vpoke(0x5004,0x55);
+  init_vec();
+  //print_byte(PEEK(0x5004));
   //test_3_var(1,3,6,255);
   init_vec();
   irq_init();
   nmi_init();
 
   vdp_init();
-  vdp_print_nl("VDP initialised");
-  //acia_print_nl("VDP initialised");
-
-  //acia_init();
-  //acia_print_nl("ACIA initialised");
-  //vdp_print_nl("ACIA initialised");
+  vdp_print(m5);
+  vdp_print_nl(m6);
+  acia_print(m5);
+  acia_print_nl(m6);
 
 
-  EWOZ();
-  vdp_print_nl("EWOZ initialised");
+
+  acia_init();
+  vdp_print(m3);
+  vdp_print_nl(m6);
+  acia_print(m3);
+  acia_print_nl(m6);
+
+
 
   if (kb_check() == 0x00){
     kb_init();
-    acia_print_nl("PS2 found");
-  } else acia_print_nl("PS2 NOT found");
+    vdp_print(m4);
+    vdp_print_nl(m6);
+    acia_print(m4);
+    acia_print_nl(m6);
+  } else {
+    vdp_print(m4);
+    vdp_print_nl(m7);
+    acia_print(m4);
+    acia_print_nl(m7);
+
+  }
 
   saa_init();
   acia_print_nl("SAA Initialised");
@@ -130,7 +158,7 @@ void IRQ_Event(){
   acia_putc('I');
 }
 void NMI_Event(){
-  //acia_putc('N');
+  acia_putc('N');
 }
 
 void main(void) {
@@ -139,9 +167,6 @@ void main(void) {
   char c;
   char i;
   int x ;
-  const char *m0 = "APPARTUS PROJEKT65 v9-1-2 Bootloader v6";
-  const char * m1 = "w for start write to RAM";
-  const char * m2 = "m for start monitor";
   INTDI();
   setup();
   //INTDI();

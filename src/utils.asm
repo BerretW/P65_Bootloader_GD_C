@@ -106,7 +106,7 @@ _PRHEX:           AND #$0F        ;Mask LSD for hex print.
                   ADC #$06        ;Add offset for letter.
 @ECHO:             PHA ;*Save A
                   AND #$7F        ;*Change to "standard ASCII"
-                  JSR _acia_putc    ;*ACIA not done yet, wait.
+                  JSR _VDP_print_char    ;*ACIA not done yet, wait.
                   PLA ;*Restore A
                   RTS ;*Done, over and out...
 

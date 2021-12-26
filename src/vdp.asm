@@ -37,7 +37,7 @@ vdp_bord_col: .res 2
 .export _vdp_init
 .export _vdp_set_bgc, _vdp_set_fnc, _VDP_print_char, _vdp_fill
 .export init_vdp_txt,vdp_addr_nme
-.export _vdp_puts, _vdp_print_nl
+.export _vdp_puts, _vdp_print_nl, _vdp_print
 .code
 ;_init:
 
@@ -69,7 +69,8 @@ _vdp_puts:          phay
 @eos:               play
                     rts
 
-
+_vdp_print:         JSR _vdp_puts
+                    RTS
 _vdp_print_nl:      JSR _vdp_puts
 _vdp_put_newline:   JSR gr_new_ln
                     RTS

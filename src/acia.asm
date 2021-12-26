@@ -22,6 +22,7 @@
                     .export _acia_put_newline
                     .export _acia_scan
                     .export _acia_print_nl
+                    .export _acia_print
 
                     .code
 
@@ -78,6 +79,14 @@ _acia_put_newline:  PHA
 ;---------------
 _acia_print_nl:  JSR     _acia_puts
                  JMP     _acia_put_newline
+
+
+
+                 ;---------------
+                 ; print string then new line
+                 ;---------------
+_acia_print:      JSR     _acia_puts
+                  RTS
 
 
 ; char acia_getc()

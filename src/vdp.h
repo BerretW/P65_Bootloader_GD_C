@@ -13,3 +13,4 @@ extern void __fastcall__ vdp_reg0_val();
 extern void __fastcall__ vdp_reg1_val();
 extern void __fastcall__ vdp_puts(const char * s);
 extern void vdp_print_nl(const char * s);
+extern void vdp_print(const char * s);

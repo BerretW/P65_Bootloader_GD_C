@@ -239,8 +239,7 @@ AND #$7F        ;*Change to "standard ASCII"
 STA ACIA_DAT    ;*Send it.
 JSR gr_put_byte
 
-@WAIT:        PLA
-              RTS
+@WAIT:       
 LDA ACIA_SR     ;*Load status register for ACIA
 AND #$10        ;*Mask bit 4.
 BEQ    @WAIT    ;*ACIA not done yet, wait.
