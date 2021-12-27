@@ -104,7 +104,7 @@ void lcd_setup(){
 
 
 void setup(){
-  lcd_setup();
+  //lcd_setup();
   //vpoke(0x5004,0x55);
   init_vec();
   //print_byte(PEEK(0x5004));
@@ -116,12 +116,13 @@ void setup(){
   vdp_init();
   vdp_print(m5);
   vdp_print_nl(m6);
-  acia_print(m5);
-  acia_print_nl(m6);
+
 
 
 
   acia_init();
+  acia_print(m5);
+  acia_print_nl(m6);
   vdp_print(m3);
   vdp_print_nl(m6);
   acia_print(m3);

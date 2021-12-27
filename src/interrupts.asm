@@ -14,9 +14,9 @@
 _NMI_ISR:         PHA
                   PHX
                   PHY
-                  JSR _NMI_Event
-                  LDA #$4D
-                  STA VIA2_T1C_H
+                  ;JSR _NMI_Event
+                  ;LDA #$4D
+                  ;STA VIA2_T1C_H
 @end:             PLY
                   PLX
                   PLA
